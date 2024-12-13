@@ -21,13 +21,9 @@ const CollaborativeRoom = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  console.log({ editing, loading });
-
   const saveDocument = async () => {
-    console.log("saveDocument hit");
     try {
       if (documentTitle !== roomMetadata.title) {
-        console.log("HELLO?");
         setLoading(true);
         await updateDocument(roomId, documentTitle);
         setLoading(false);
@@ -48,13 +44,11 @@ const CollaborativeRoom = ({
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      console.log({ editing, containerRef });
       if (
         editing &&
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
       ) {
-        console.log("is this getting hit???");
         saveDocument();
       }
     };
@@ -64,7 +58,7 @@ const CollaborativeRoom = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [roomId, documentTitle]);
+  }, [roomId, documentTitle, editing]);
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -81,7 +75,6 @@ const CollaborativeRoom = ({
               ref={containerRef}
               className="flex w-fit items-center justify-center gap-2"
             >
-              {/* <p className="document-title">Share</p> */}
               {editing && !loading ? (
                 <Input
                   type="text"
@@ -105,7 +98,6 @@ const CollaborativeRoom = ({
                   width={24}
                   height={24}
                   onClick={() => {
-                    console.log("this image is getting hit???");
                     setEditing(true);
                   }}
                   className="pointer"
