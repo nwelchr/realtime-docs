@@ -31,18 +31,15 @@ export const dateConverter = (timestamp: string): string => {
   const diffInHours: number = diffInMinutes / 60;
   const diffInDays: number = diffInHours / 24;
 
-  switch (true) {
-    case diffInDays > 7:
-      return `${Math.floor(diffInDays / 7)} weeks ago`;
-    case diffInDays >= 1 && diffInDays <= 7:
-      return `${Math.floor(diffInDays)} days ago`;
-    case diffInHours >= 1:
-      return `${Math.floor(diffInHours)} hours ago`;
-    case diffInMinutes >= 1:
-      return `${Math.floor(diffInMinutes)} minutes ago`;
-    default:
-      return "Just now";
-  }
+  const pluralize = (value: number, unit: string) =>
+    `${Math.floor(value)} ${unit}${Math.floor(value) === 1 ? "" : "s"}`;
+
+  if (diffInDays > 7) return pluralize(diffInDays / 7, "week") + " ago";
+  if (diffInDays >= 1) return pluralize(diffInDays, "day") + " ago";
+  if (diffInHours >= 1) return pluralize(diffInHours, "hour") + " ago";
+  if (diffInMinutes >= 1) return pluralize(diffInMinutes, "minute") + " ago";
+
+  return "Just now";
 };
 
 // Function to generate a random color in hex format, excluding specified colors
