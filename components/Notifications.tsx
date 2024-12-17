@@ -22,7 +22,7 @@ const Notifications = () => {
   const { inboxNotifications } = useInboxNotifications();
   const { count } = useUnreadInboxNotificationsCount();
 
-  const unreadNotifications = inboxNotifications.filter(
+  const unreadNotifications = inboxNotifications?.filter(
     (notification) => !notification.readAt
   );
 
@@ -48,11 +48,7 @@ const Notifications = () => {
           }}
         >
           <InboxNotificationList>
-            {unreadNotifications.length <= 0 ? (
-              <p className="py-2 text-center text-dark-500">
-                No new notifications
-              </p>
-            ) : (
+            {unreadNotifications?.length > 0 ? (
               unreadNotifications.map((notification) => (
                 <InboxNotification
                   key={notification.id}
@@ -99,6 +95,10 @@ const Notifications = () => {
                   }}
                 />
               ))
+            ) : (
+              <p className="py-2 text-center text-dark-500">
+                No new notifications
+              </p>
             )}
           </InboxNotificationList>
         </LiveblocksUIConfig>
