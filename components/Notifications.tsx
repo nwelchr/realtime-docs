@@ -43,7 +43,7 @@ const Notifications = () => {
         <LiveblocksUIConfig
           overrides={{
             INBOX_NOTIFICATION_TEXT_MENTION: (user: ReactNode) => (
-              <>{user} mentioned you</>
+              <>{user} mentioned you.</>
             ),
           }}
         >
@@ -92,8 +92,9 @@ const Notifications = () => {
                             />
                           </InboxNotification.Icon>
                         }
+                      >
                         {props.children}
-                      ></InboxNotification.Custom>
+                      </InboxNotification.Custom>
                     ),
                   }}
                 />
